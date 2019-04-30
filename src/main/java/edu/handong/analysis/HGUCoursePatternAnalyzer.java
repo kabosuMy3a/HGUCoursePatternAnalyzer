@@ -31,18 +31,32 @@ public class HGUCoursePatternAnalyzer {
 	public void run(String[] args) {
 		
 		numOfStudents = Integer.parseInt(args[0]);
+	
+		if(numOfStudents != 3){
+			System.out.println("please input correct number, because it's our rule");
+			return ;
+		}
+	
 		numOfCourses = Integer.parseInt(args[1]);
+	
+		if(numOfCourses != 6){
+			System.out.println("please input correct number, because it's our rule");
+			return ;
+		}
 	
 		students = initiateStudentArrayFromLines(lines);
 		
 		System.out.println("Number of All Students: " + numOfStudents);
 		for(Student student: students) {
-			System.out.println(student.getName());
+			if(student != null)
+			System.out.println(student.getStudentName());
 		}
 		
 		courses = initiateCourseArrayFromLines(lines);
+		
 		System.out.println("Number of All Courses: " + numOfCourses);
 		for(Course course: courses) {
+			if(course != null)
 			System.out.println(course.getCourseName());
 		}
 		
@@ -55,10 +69,36 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private Student[] initiateStudentArrayFromLines(String[] lines) {
 		
-		// TODO: implement this method
+		students = new Student[numOfStudents] ;
+
+		int numOfData = lines.length ;
+		String[] afterSplit = new String[numOfData] ;
+		Student temp = new Student();
+
 		
+		int i = 0 ;
 		
-		return null;
+		for(int j= 0 ; j< numOfData ; j++){
+		
+			if (i>numOfStudents){
+				System.out.println("wrong input String[]");
+			       	break;	
+			}
+		
+			afterSplit = lines[j].split(",") ;  
+			temp.setStudentName(afterSplit[1].trim()) ;
+			
+			if(!studentExist(students, temp)){
+				students[i] = new Student() ;
+				students[i].setStudentName(afterSplit[1].trim()) ;
+				i++ ;
+		
+			}
+		
+		}
+	
+		return students;
+
 	}
 
 	/**
@@ -69,7 +109,18 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private boolean studentExist(Student[] students, Student student) {
 		
-		// TODO: implement this method
+		String existName = "";
+		
+
+		for(Student member : students){
+			
+			if (member!= null){	
+				existName = member.getStudentName() ;
+				if(existName.equals(student.getStudentName())){
+					return true ;
+				}	
+			}
+		}
 
 		return false;
 	}
@@ -81,9 +132,35 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private Course[] initiateCourseArrayFromLines(String[] lines) {
 		
-		// TODO: implement this method
+		courses = new Course[numOfCourses] ;
+
+		int numOfData = lines.length ;
+		String[] afterSplit = new String[numOfData] ;
+		Course temp = new Course();
+
 		
-		return null;
+		int i = 0 ;
+		
+		for(int j= 0 ; j< numOfData ; j++){
+		
+			if (i>numOfCourses){
+				System.out.println("wrong input String[]");
+			       	break;	
+			}
+		
+			afterSplit = lines[j].split(",") ;  
+			temp.setCourseName(afterSplit[2].trim()) ;
+			
+			if(!courseExist(courses, temp)){
+				courses[i] = new Course() ;
+				courses[i].setCourseName(afterSplit[2].trim()) ;
+				i++ ;
+		
+			}
+		
+		}
+		
+		return courses;
 	}
 
 	/**
@@ -94,7 +171,18 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private boolean courseExist(Course[] courses, Course course) {
 		
-		// TODO: implement this method
+		String existName = "";
+		
+
+		for(Course member : courses){
+			
+			if (member!= null){	
+				existName = member.getCourseName() ;
+				if(existName.equals(course.getCourseName())){
+					return true ;
+				}	
+			}
+		}
 
 		return false;
 	}
